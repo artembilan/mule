@@ -6,16 +6,13 @@
  */
 package org.mule.config.spring.factories;
 
-import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
-import static org.mule.config.spring.factories.TransactionManagerFactoryBean.WRONG_DEFINITION_ERROR;
 
 import org.mule.DefaultMuleContext;
-import org.mule.api.MuleRuntimeException;
 import org.mule.context.DefaultMuleContextFactory;
 import org.mule.tck.junit4.AbstractMuleTestCase;
 import org.mule.tck.testmodels.mule.TestTransactionManagerFactory;
@@ -55,20 +52,6 @@ public class TransactionManagerFactoryBeanTestCase extends AbstractMuleTestCase
         txMgrFB.setCustomTxManager(txMgr);
         TransactionManager transactionManager = txMgrFB.getObject();
         assertThat(transactionManager, sameInstance(txMgr));
-    }
-
-    @Test
-    public void errorWhenTransactionManagerAndTransactionManagerFactoryDefined() throws Exception
-    {
-        expectedException.expect(MuleRuntimeException.class);
-        expectedException.expectMessage(containsString(WRONG_DEFINITION_ERROR));
-        DefaultMuleContext context = (DefaultMuleContext) new DefaultMuleContextFactory().createMuleContext();
-        TransactionManagerFactoryBean txMgrFB = new TransactionManagerFactoryBean();
-        txMgrFB.setMuleContext(context);
-        txMgrFB.setTxManagerFactory(new TestTransactionManagerFactory());
-        TransactionManager txMgr = mock(TransactionManager.class);
-        txMgrFB.setCustomTxManager(txMgr);
-        txMgrFB.getObject();
     }
 
 }
