@@ -18,6 +18,7 @@ import javax.transaction.TransactionManager;
 
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 
 /**
  * {@link FactoryBean} adapter for the configured {@link TransactionManagerFactory}.
@@ -40,6 +41,7 @@ public class TransactionManagerFactoryBean implements FactoryBean<TransactionMan
     @Autowired(required = false)
     private TransactionManagerFactory txManagerFactory;
 
+    @Lazy
     @Autowired(required = false)
     private TransactionManager customTxManager;
 
